@@ -79,6 +79,14 @@ mod tests {
     }
 
     #[test]
+    fn test_travel() {
+        let input = "R3, L2";
+        let start = Point(0, 0);
+
+        assert_eq!(travel(input, start), Point(-2, 3));
+    }
+
+    #[test]
     fn add_point() {
         let p1 = Point(0, 0);
         let p2 = Point(0, 1);
