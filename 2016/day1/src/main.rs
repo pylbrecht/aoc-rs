@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use std::ops::{Add, Mul};
 
 #[derive(Debug, PartialEq)]
 enum Direction {
@@ -11,6 +12,30 @@ struct Instruction {
     direction: Direction,
     distance: usize,
 }
+
+#[derive(PartialEq, Debug)]
+struct Point(isize, isize);
+
+impl Add for Point {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self(self.0 + other.0, self.1 + other.1)
+    }
+}
+
+impl Mul<usize> for Point {
+    type Output = Self;
+
+    fn mul(self, rhs: usize) -> Self {
+        Point(self.0 * rhs as isize, self.1 * rhs as isize)
+    }
+}
+
+const NORTH: Point = Point(0, 1);
+const EAST: Point = Point(1, 0);
+const SOUTH: Point = Point(-1, 0);
+const WEST: Point = Point(0, -1);
 
 fn parse_input(input: &str) -> Vec<Instruction> {
     input
@@ -51,5 +76,19 @@ mod tests {
         ];
         let parsed = parse_input(input);
         assert_eq!(parsed, directions);
+    }
+
+    #[test]
+    fn add_point() {
+        let p1 = Point(0, 0);
+        let p2 = Point(0, 1);
+        assert_eq!(p1 + p2, Point(0, 1));
+    }
+
+    #[test]
+    fn mul_point() {
+        let p1 = Point(0, 0);
+        let p2 = Point(0, 1);
+        assert_eq!(p1 + p2, Point(0, 1));
     }
 }
